@@ -45,15 +45,13 @@ function truncate(string, largo){
 if(args.length === 0 || args[0] === ""){
 	console.log('Tiene que poner el path del archivo a revisar.');	
 }else{
-let fs = require('fs');
- 
+let fs = require('fs'); 
  
 fs.readdir(args[0], function(err, items) {
     console.log('Archivos:');
     //console.log(items);
  
     for (var i=0; i<items.length; i++) {
-
         //console.log(items[i]);
         let archivo = items[i];
         if(archivo.indexOf('md') !== -1){
@@ -63,14 +61,13 @@ fs.readdir(args[0], function(err, items) {
                     console.log( archivo + ":" + i + " " + linksExtractor[i].href + " " + truncate(linksExtractor[i].text,50));	
                 }
             });	        
-    
         }
     }
 });
 
-
-
-
 }
-
-
+//Prueba Test
+function sum(a, b) {
+    return a + b;
+  }
+  module.exports = sum;
