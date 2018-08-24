@@ -13,6 +13,18 @@ describe(
 });
 
 describe(
+    'Verifica si convierte a ruta absoluta una ruta relativa',
+    () => {
+    test('Si, es ruta absoluta', ()=> {
+        expect(mdLinks.convertToAbsolutePath('/Mi/Ruta/Falsa')).toEqual('/Mi/Ruta/Falsa');
+    });
+
+    test('No, se convierte a ruta absoluta', ()=> {
+        expect(mdLinks.convertToAbsolutePath('Ruta/Falsa')).toEqual('/Mi/Ruta/Falsa');
+    });
+});
+
+describe(
     'Verifica si es Directorio',
     () => {
 
