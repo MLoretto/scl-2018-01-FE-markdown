@@ -1,14 +1,14 @@
-const sum = require('../index.js');
+const mdLinks = require('../index.js');
 
 describe(
     'Verifica si ingresa argumento',
     () => {
     test('Verificar si ingresa ruta', ()=> {
-        expect(verifyEntryPath('/Mi/Ruta/Falsa')).toBeTruthy();
+        expect(mdLinks.verifyEntryPath('/Mi/Ruta/Falsa')).toBeTruthy();
     });
 
     test('Verificar mensaje de error si no ingresa Ruta', ()=> {
-        expect(verifyEntryPath('')).toEqual('Tiene ingresar el path a revisar.');
+        expect(mdLinks.verifyEntryPath('')).toEqual('Tiene ingresar el path a revisar.');
     });
 });
 
@@ -17,11 +17,11 @@ describe(
     () => {
 
     test('Si, es un directorio',()=>{
-        expect(verifyDirectory('rutafalsa/rutafalsa')).toBeTruthy();
+        expect(mdLinks.verifyDirectory('rutafalsa/rutafalsa')).toBeTruthy();
     });
 
     test('No es directorio',()=>{
-        expect(verifyDirectory('rutafalsa/archivofalso.txt')).toBeFalsy();
+        expect(mdLinks.verifyDirectory('rutafalsa/archivofalso.txt')).toBeFalsy();
     });
 });
 
@@ -30,11 +30,11 @@ describe(
     () => {
 
     test('Si, es un archivo',()=>{
-        expect(verifyArchivo('archivofalso.falso')).toBeTruthy();
+        expect(mdLinks.verifyArchivo('archivofalso.falso')).toBeTruthy();
     });
 
     test('No es archivo',()=>{
-        expect(verifyArchivo('rutafalsa/archivofalso')).toBeFalsy();
+        expect(mdLinks.verifyArchivo('rutafalsa/archivofalso')).toBeFalsy();
     });
 });
 
@@ -42,11 +42,11 @@ describe(
     'Verifica si archivo es md',
     () => {
         test('Si es Archivo .md',()=>{
-            expect(verifyMd('archivofalso.md')).toBeTruthy();
+            expect(mdLinks.verifyMd('archivofalso.md')).toBeTruthy();
         });
     
         test('No es Archivo .md',()=>{
-            expect(verifyMd('archivofalso.txt')).toBeFalsy();
+            expect(mdLinks.verifyMd('archivofalso.txt')).toBeFalsy();
         });
 });
 
