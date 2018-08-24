@@ -27,6 +27,17 @@ describe(
 });
 
 describe(
+    'lista los archivos de un path recursivo',
+    () => {
+    test('Retorna arreglo con los links de cada archivo recursivo', () => {
+        expect.assertions(1);
+		let arrayData = [];
+		mdLinks.getDirectoryList('.', arrayData);
+		expect(arrayData[0]).toEqual('archivofalso.falso');
+    });
+});
+
+describe(
     'Verifica si es Directorio',
     () => {
 
