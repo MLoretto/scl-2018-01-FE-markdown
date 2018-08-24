@@ -1,12 +1,25 @@
 #!/usr/bin/env node 
-//Es para dejarlo dentro del ambiente. Ejecutar el comando "chmod +x index.js"
+
 let args = process.argv.slice(2);
 console.dir(args);
 const Marked = require('marked');
-// Función necesaria para extraer los links usando marked
-// (tomada desde biblioteca del mismo nombre y modificada para el ejercicio)
+const path = require('path');
 
-// Recibe texto en markdown y retorna sus links en un arreglo
+let mdLinks = {};
+mdLinks.verifyEntryPath = (path) => {
+    if(path !== ''){
+        return true;
+    }else{
+        return 'Tiene ingresar el path a revisar.';
+    }
+};
+
+mdLinks.convertToAbsolutePath = (ruta) => { // Convierte de inmediato la ruta relativa a absoluta... Woooo!!!!
+    return path.resolve(ruta); 
+}
+
+// Hasta aca voy con test y funciones... continuara...
+
 function markdownLinkExtractor(markdown) {
   const links = [];
   const renderer = new Marked.Renderer();
@@ -67,3 +80,4 @@ fs.readdir(args[0], function(err, items) {
 
 }
 
+module.exports = mdLinks;

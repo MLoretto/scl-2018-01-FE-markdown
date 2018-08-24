@@ -1,4 +1,5 @@
 const mdLinks = require('../index.js');
+const path = require('path');
 
 describe(
     'Verifica si ingresa argumento',
@@ -20,7 +21,8 @@ describe(
     });
 
     test('No, se convierte a ruta absoluta', ()=> {
-        expect(mdLinks.convertToAbsolutePath('Ruta/Falsa')).toEqual('/Mi/Ruta/Falsa');
+        let workingPath = path.resolve('');
+        expect(mdLinks.convertToAbsolutePath('Mi/Ruta/Falsa')).toEqual(`${workingPath}/Mi/Ruta/Falsa`);
     });
 });
 
