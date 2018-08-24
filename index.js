@@ -43,7 +43,7 @@ function truncate(string, largo){
 };
 
 if(args.length === 0 || args[0] === ""){
-	console.log('Tiene que poner el path del archivo a revisar.');	
+	console.log('Tiene ingresar el path a revisar.');	
 }else{
 let fs = require('fs'); 
  
