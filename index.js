@@ -66,8 +66,4 @@ fs.readdir(args[0], function(err, items) {
 });
 
 }
-//Prueba Test
-function sum(a, b) {
-    return a + b;
-  }
-  module.exports = sum;
+
