@@ -33,6 +33,27 @@ mdLinks.convertToAbsolutePath = (ruta) => { // Convierte de inmediato la ruta re
     return path.resolve(ruta); 
 }
 
+//lee un archivo y lo retorna como una promesa.
+mdLinks.leerArchivo  = (myFile) => {
+	return new Promise(function (resolve, reject) {
+		resolve(fs.readFileSync(myFile, 'utf8'));
+	});	
+};
+
+//obtiene los archivos y directorios de un directorio y los retorna como un array
+mdLinks.listarDirectorio = (myPath) => {
+	return new Promise(function (resolve, reject){
+		resolve(fs.readdirSync(myPath));
+	});
+}
+
+mdLinks.truncate = (string, largo)=>{
+    if (string.length > largo)
+        return string.substring(0,largo)+'...';
+    else
+        return string;
+}
+
 // Hasta aca voy con test y funciones... continuara...
 
 function markdownLinkExtractor(markdown) {
@@ -63,13 +84,8 @@ function markdownLinkExtractor(markdown) {
   return links;
 };
 
-function truncate(string, largo){
-   if (string.length > largo)
-      return string.substring(0,largo)+'...';
-   else
-      return string;
-};
 
+/*
 if(args.length === 0 || args[0] === ""){
 	console.log('Tiene ingresar el path a revisar.');	
 }else{
@@ -93,5 +109,5 @@ fs.readdir(args[0], function(err, items) {
 });
 
 }
-
+*/
 module.exports = mdLinks;
