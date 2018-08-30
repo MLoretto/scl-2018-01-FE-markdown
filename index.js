@@ -47,12 +47,48 @@ mdLinks.listarDirectorio = (myPath) => {
 	});
 }
 
-mdLinks.truncate = (string, largo)=>{
-    if (string.length > largo)
-        return string.substring(0,largo)+'...';
-    else
-        return string;
+mdLinks.truncate = (texto, largo)=>{
+    if(texto === ''){
+        return texto;
+    }else{
+        if (texto.length > largo)
+            return texto.substring(0,largo) + '...';
+        else
+            return texto;
+    }
 }
+
+mdLinks.getLinks = (dataFile) => {
+    let lineArray = dataFile.split('\n');
+	return new Promise(function (resolve, reject){
+        let links = [];
+        for(let i=0;i<lineArray.length;i++){
+            let link = markdownLinkExtractor(lineArray[i]);
+            
+            if(link.length > 0){
+                link[0]["linea"] = i;
+                //./some/example.md:10 http://algo.com/2/3/ Link a algo
+                //console.log(`archivo:${i} ${link.href} ${mdLinks.truncate(link.text,47)}`);
+                //console.log(`:${i} -- |${link}| --|${link.linea}|-- ${link.length}`);
+                links.push(link);
+            }
+            
+        }
+        resolve(links);
+	});
+}
+
+mdLinks.getAllLinksFromFile = (filePath) => {
+    mdLinks.leerArchivo(filePath)
+    .then(function (file){
+        mdLinks.getLinks(file).then(function (links){
+            links.forEach(function(link){
+                console.log(`${filePath}:${link[0].linea} ${link[0].href} ${link[0].text}`);
+            });
+        });
+    });
+}
+
 
 // Hasta aca voy con test y funciones... continuara...
 
@@ -110,4 +146,8 @@ fs.readdir(args[0], function(err, items) {
 
 }
 */
+mdLinks.getAllLinksFromFile(args[0]);
+console.log("listo..");
+
+
 module.exports = mdLinks;
