@@ -6,6 +6,10 @@ const Marked = require('marked');
 const path = require('path');
 const fs = require('fs'); 
 
+const https = require('https');
+const http = require('http');
+
+
 let mdLinks = {};
 
 mdLinks.getDirectoryList = (myPath, files) => {
@@ -20,6 +24,45 @@ mdLinks.getDirectoryList = (myPath, files) => {
         }
     });
 };
+
+//valida si la direccion web y retorna su codigo de respuesta.
+mdLinks.validateUrl = (link) => {
+	let url = link[0].href;
+
+	if(url.indexOf('https') > -1){
+		return new Promise(function (resolve, reject){
+			https.get(url, (resp) => {
+			  const { statusCode } = resp;
+			  if(statusCode < 400){
+			      link[0].valid = 'ok ' + statusCode;
+				  resolve(link);
+			  }else{
+			      link[0].valid = 'fail ' + statusCode;
+				  resolve(link);
+			  }
+			}).on("error", (err) => {
+				link[0].valid = 'fail ' + err.code;
+				resolve(link);
+			});	
+		});
+	}else{
+		return new Promise(function (resolve, reject){
+			http.get(url, (resp) => {
+			  const { statusCode } = resp;
+			  if(statusCode < 400){
+			      link[0].valid = 'ok ' + statusCode;
+				  resolve(link);
+			  }else{
+			      link[0].valid = 'fail ' + statusCode;
+				  resolve(link);
+			  }
+			}).on("error", (err) => {
+				link[0].valid = 'fail ' + err.code;
+				resolve(link);
+			});	;	
+		});
+	}
+}
 
 //Obtiene los archivos y directorios de un directorio recursivamente y los retorna como un array
 mdLinks.getAllDirectoryContent = (myPath) => {
@@ -96,25 +139,22 @@ mdLinks.markdownLinkExtractor = (markdown) => {
     
 
 //Obtiene los links de un string.
-mdLinks.getLinks = (dataFile, fileName, option) => {
-    let validate = false;
-    if(option !== undefined && option.validate !== undefined){
-         validate = option.validate;
-    }
+mdLinks.getLinks = (dataFile, fileName) => {
+
     let lineArray = dataFile.split('\n');
     let links = [];
     for(let i=0;i<lineArray.length;i++){
         let link = mdLinks.markdownLinkExtractor(lineArray[i]);
-        //Aquí debería verificar el link
         if(link.length > 0){
             link[0]["linea"] = i;
             link[0]['fileName'] = fileName;
-            if(validate === true){
-                link[0]['valid'] = '--';
-            }else{
-                link[0]['valid'] = '';
-            }
-
+            //if(validate === true){
+			//	let codeResponse = mdLinks.validateUrl(link);
+			//	console.log(`url ${link} -- ${codeResponse}`);
+            //    link[0]['valid'] = codeResponse;
+            //}else{
+            link[0]['valid'] = '';
+            //}
             links.push(link);
         }
     }
@@ -130,7 +170,10 @@ mdLinks.getAllLinksFromFile = (filePath, option) => {
 
 
 mdLinks.mdLinks = (path, option) =>{
-
+	let validate = false;
+    if(option !== undefined && option.validate !== undefined){
+         validate = option.validate;
+    }
     return new Promise(function (resolve, reject){
         if(mdLinks.verifyEntryPath(path)){
             if(fs.lstatSync(path).isDirectory()){
@@ -138,13 +181,30 @@ mdLinks.mdLinks = (path, option) =>{
                 mdLinks.getDirectoryList(path,files);
                 totalArrayResult = [];
                 files.forEach(function(file){
-                    totalArrayResult = totalArrayResult.concat(mdLinks.getLinks(mdLinks.leerArchivo(file),file,option));
+                    totalArrayResult = totalArrayResult.concat(mdLinks.getLinks(mdLinks.leerArchivo(file),file));
                 });
-                resolve(totalArrayResult);
+				if(validate === true){
+					let actions = totalArrayResult.map(mdLinks.validateUrl); 
+					Promise.all(actions) // pasa por el array de promesas
+					.then(data => 
+						resolve(data)
+					);
+				}else{
+					resolve(totalArrayResult);
+				}
+				
             }else{
                 mdLinks.getAllLinksFromFile(path,option)
                 .then(function(links){
-                    resolve(links);
+					if(validate === true){
+						let actions = links.map(mdLinks.validateUrl); 
+						Promise.all(actions) // pasa por el array de promesas
+						.then(data => 
+							resolve(data)
+						);	
+					}else{
+						resolve(links);
+					}					
                 });
             }
         }else{
