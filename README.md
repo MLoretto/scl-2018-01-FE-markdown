@@ -1,22 +1,20 @@
 # README EN CONSTRUCCIÓN
 
-ESTAMOS TRABAJANDO PARA USTED
-![img](img/construccion.jpg)
-
 # Markdown Links
 
-Documentación requerida
+Instrucciones de instalación
 
-Descripción general de la librería.
+Ejecute en la consola el siguiente comando
 
-Instrucciones de instalación.
+```bash
+npm i ultra-markdown-md-links
+```
 
 Versiones de la librería.
 1.0.0
 
-Documentación de la Librería (Features, link de Demo, test, etc...).
-
-Ejemplos (snippets) de uso.
+ESTAMOS TRABAJANDO PARA USTED
+![img](img/construccion.jpg)
 
 ## Organización
 
