@@ -1,9 +1,28 @@
+# README EN CONSTRUCCIÓN
+
+ESTAMOS TRABAJANDO PARA USTED
+![img](img/construcction.jpg)
+
+
+# Markdown Links
+
+Documentación requerida
+
+Descripción general de la librería.
+
+Instrucciones de instalación.
+
+Versiones de la librería.
+1.0.0
+
+Documentación de la Librería (Features, link de Demo, test, etc...).
+
+Ejemplos (snippets) de uso.
+
 ## Organización
 
 Puedes revisar la Organización en el siguiente link de Trello.
 (https://trello.com/b/W4NDZZ2e/markdown)
-
-# Markdown Links
 
 ## Preámbulo
 
