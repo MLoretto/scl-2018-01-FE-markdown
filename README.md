@@ -1,8 +1,7 @@
 # README EN CONSTRUCCIÓN
 
 ESTAMOS TRABAJANDO PARA USTED
-![img](img/construcction.jpg)
-
+![img](img/construccion.jpg)
 
 # Markdown Links
 
