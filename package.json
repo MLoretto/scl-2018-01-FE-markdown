@@ -1,8 +1,11 @@
 {
-  "name": "scl-2018-01-fe-markdown",
+  "name": "ultra-markdown-md-links",
   "version": "1.0.0",
-  "description": "Search Markdown",
+  "description": "Search and valid markdown links .md",
   "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "dependencies": {
     "jest": "^23.5.0",
     "marked": "^0.5.0"
@@ -19,12 +22,19 @@
     "markdown",
     "links",
     "searchlinks",
-    "marcado"
+    "marcado",
+    "validatelinks",
+    "statuslinks",
+    "validatehttp",
+    "validatehttps",
+    "cat",
+    ".md",
+    "md"
   ],
   "author": "MLoretto",
   "license": "ISC",
   "bin": {
-    "md-links" : "./index.js"
+    "md-links": "./index.js"
   },
   "bugs": {
     "url": "https://github.com/MLoretto/scl-2018-01-FE-markdown/issues"

@@ -9,9 +9,7 @@ const fs = require('fs');
 const https = require('https');
 const http = require('http');
 
-
 let mdLinks = {};
-
 mdLinks.getDirectoryList = (myPath, files) => {
     fs.readdirSync(myPath).forEach(function(file){
         let subpath = path.join(myPath , file);
@@ -148,13 +146,7 @@ mdLinks.getLinks = (dataFile, fileName) => {
         if(link.length > 0){
             link[0]["linea"] = i;
             link[0]['fileName'] = fileName;
-            //if(validate === true){
-			//	let codeResponse = mdLinks.validateUrl(link);
-			//	console.log(`url ${link} -- ${codeResponse}`);
-            //    link[0]['valid'] = codeResponse;
-            //}else{
             link[0]['valid'] = '';
-            //}
             links.push(link);
         }
     }
@@ -213,21 +205,60 @@ mdLinks.mdLinks = (path, option) =>{
     });
 }
 
+//ejecuta en modo CLI
 console.log('Cargando...');
-let option;
+let option = {};
 if(args.indexOf('--validate') > -1)
 {
-    option = { validate: true };
+    option["validate"] = true;
 }else{
-    option = undefined;
+	option["validate"] = false;
+}
+if (args.indexOf('--stats') > -1){
+    option["stats"] = true;
+}else{
+    option["stats"] = false;
 }
 mdLinks.mdLinks(args[0],option)
 .then(function(link){
+    let resumen = [];
     link.forEach(function(link){
-        //console.log(link);
+		if(option.stats === true){
+			let index = resumen.findIndex(obj => obj.fileName === link[0].fileName);
+			let valid = 0;
+			let noValid = 0;
+			if(link[0].valid.indexOf('ok') > -1){
+				valid = 1;
+			}else{
+				noValid = 1;
+			}
+			if( index === -1){
+				resumen.push({
+					 fileName : link[0].fileName,
+					 lineas   : 1,
+					 valid    : valid,
+					 noValid  :noValid
+				});
+			}else{
+				resumen[index].lineas+= 1;
+				resumen[index].valid += valid;
+				resumen[index].noValid += noValid;
+			}		
+		}		
         console.log(`${link[0].fileName}:${link[0].linea} ${link[0].href} ${link[0].valid} ${link[0].text}`);
     });    
-    console.log('Listo');
+	if(option.stats === true){
+        console.log('_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _');		
+		console.log('Resumen:');		
+		resumen.forEach(function(resumen){
+			if(option.validate === true){
+				console.log(`${resumen.fileName}:Lineas:${resumen.lineas}, Validas:${resumen.valid}, No Validas:${resumen.noValid}`);
+			}else{
+				console.log(`${resumen.fileName}:Lineas:${resumen.lineas}`);
+			}
+		});
+	}
+
 });
 
 module.exports = mdLinks;
