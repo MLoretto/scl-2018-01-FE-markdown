@@ -5,11 +5,11 @@ describe(
     'Verifica si ingresa argumento',
     () => {
     test('Verificar si ingresa ruta', ()=> {
-        expect(mdLinks.verifyEntryPath('/Mi/Ruta/Falsa')).toBeTruthy();
+        expect(mdLinks.verifyEntryPath('README.md')).toBeTruthy();
     });
 
     test('Verificar mensaje de error si no ingresa Ruta', ()=> {
-        expect(mdLinks.verifyEntryPath('')).toEqual('Tiene ingresar el path a revisar.');
+        expect(mdLinks.verifyEntryPath('')).toBeFalsy();
     });
 });
 
@@ -17,12 +17,13 @@ describe(
     'Verifica si convierte a ruta absoluta una ruta relativa',
     () => {
     test('Si, es ruta absoluta', ()=> {
-        expect(mdLinks.convertToAbsolutePath('/Mi/Ruta/Falsa')).toEqual('/Mi/Ruta/Falsa');
+        let workingPath = path.resolve('');
+        expect(mdLinks.convertToAbsolutePath(`Mi/Ruta/Falsa`)).toEqual(`${path.join(workingPath,'Mi','Ruta','Falsa')}`);
     });
 
     test('No, se convierte a ruta absoluta', ()=> {
         let workingPath = path.resolve('');
-        expect(mdLinks.convertToAbsolutePath('Mi/Ruta/Falsa')).toEqual(`${workingPath}/Mi/Ruta/Falsa`);
+        expect(mdLinks.convertToAbsolutePath('Mi/Ruta/Falsa')).toEqual(`${path.join(workingPath,'Mi','Ruta','Falsa')}`);
     });
 });
 
@@ -30,69 +31,61 @@ describe(
     'lista los archivos de un path recursivo',
     () => {
     test('Retorna arreglo con los links de cada archivo recursivo', () => {
-        expect.assertions(1);
+        //expect.assertions(1);
 		let arrayData = [];
-		mdLinks.getDirectoryList('.', arrayData);
-		expect(arrayData[0]).toEqual('archivofalso.falso');
+		mdLinks.getDirectoryList('node_modules/abab', arrayData);
+		expect(arrayData[0]).toEqual(path.join('node_modules','abab','CHANGELOG.md'));
     });
 });
 
 describe(
-    'Verifica si es Directorio',
-    () => {
+	'Verifica si ha ingresado un path o archivo valido', () =>{
+		test('Retorna verdadero si es un directorio', () => {
+			expect(mdLinks.verifyEntryPath(path.join('node_modules','abab'))).toBeTruthy();
+		});
+		test('Retorna verdadero si es un archivo', () => {
+			expect(mdLinks.verifyEntryPath('README.md')).toBeTruthy();
+		});
+		test('Retorna false si no es algo valido', () => {
+			expect(mdLinks.verifyEntryPath('coso')).toBeFalsy();
+		});
+	});
 
-    test('Si, es un directorio',()=>{
-        expect(mdLinks.verifyDirectory('rutafalsa/rutafalsa')).toBeTruthy();
-    });
 
-    test('No es directorio',()=>{
-        expect(mdLinks.verifyDirectory('rutafalsa/archivofalso.txt')).toBeFalsy();
-    });
-});
-
-describe(
-    'Verifica si es archivo',
-    () => {
-
-    test('Si, es un archivo',()=>{
-        expect(mdLinks.verifyArchivo('archivofalso.falso')).toBeTruthy();
-    });
-
-    test('No es archivo',()=>{
-        expect(mdLinks.verifyArchivo('rutafalsa/archivofalso')).toBeFalsy();
-    });
-});
 
 describe(
-    'Verifica si archivo es md',
+    'Verifica si es url',
     () => {
-        test('Si es Archivo .md',()=>{
-            expect(mdLinks.verifyMd('archivofalso.md')).toBeTruthy();
-        });
-    
-        test('No es Archivo .md',()=>{
-            expect(mdLinks.verifyMd('archivofalso.txt')).toBeFalsy();
-        });
+
+    test('si esta ok',()=>{
+		let obj = [{href:'https://github.com/jsdom/abab/pull/26'}];
+		expect.assertions(1);
+        return mdLinks.validateUrl(obj).then(result => expect(result[0].valid).toEqual('ok 200'));
+    });
+
+    test('si esta fail',()=>{
+		let obj = [{href:'http://MLoretto.cl'}];
+		expect.assertions(1);
+        return mdLinks.validateUrl(obj).then(result => expect(result[0].valid).toEqual('fail ENOTFOUND'));		
+    });
 });
+
 
 describe(
     'Verifica si recorre y muestra links',
     () => {
     test('Retorna arreglo vacío si no encuentra links', () => {
         expect.assertions(1);
-        return mdLinks.mdLinks('./Ultrafalsa/archivofalso.md').then(arrayData => expect(arrayData).toEqual([]));
+        return mdLinks.mdLinks('RADMEE.md').then(arrayData => expect(arrayData).toEqual([]));
     });
 
     test('Retorna arreglo con objeto que contiene links, texto, path y línea', () => {
         expect.assertions(4);
-        return mdLinks.mdLinks('./rutafalsa/archivofalso.md').then(arrayData => {
-            let linksData = arrayData[0];
-            expect(linksData.href).toEqual('http://webfalsa.com');
-            expect(linksData.line).toEqual('666');
-            expect(linksData.text).toEqual('link falso');
-            expect(linksData.path).toEqual('./rutafalsa/archivofalso.md');
+        return mdLinks.mdLinks('node_modules/abab/README.md').then(arrayData => {
+            expect(arrayData[0][0].href).toEqual('https://badge.fury.io/js/abab.svg');
+            expect(arrayData[0][0].linea).toEqual(0);
+            expect(arrayData[0][0].text).toEqual('npm version');
+            expect(arrayData[0][0].fileName).toEqual('node_modules/abab/README.md');
         });
     });
 });
-
-

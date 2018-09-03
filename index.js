@@ -76,11 +76,19 @@ mdLinks.getAllDirectoryContent = (myPath) => {
 
 //Verifica si el parametro tiene algún contenido
 mdLinks.verifyEntryPath = (path) => {
-    if(path !== undefined){
-        return true;
-    }else{
+    try{
+        if(fs.lstatSync(path).isDirectory()){
+            return true;
+        }
+        if(fs.lstatSync(path).isFile()){
+            return true;
+        }
+    } catch (err){
         return false;
     }
+    return true;
+
+
 };
 
 
