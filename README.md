@@ -9,7 +9,14 @@ npm i ultra-markdown-md-links
 ```
 
 
-# Ultra-markdown-md-links
+Ultra-markdown-md-links lee y analiza archivos en formato `Markdown`.
+  - Desplegando listado de links.
+  - Ruta del archivo donde se encontró el link.
+  - Número de línea donde se encuentra.
+  - Link
+  - Texto que acompaña al link.
+
+## md-links
 
 ```bash
 md-links (Ruta Archivo)
@@ -19,13 +26,6 @@ md-links (Ruta Archivo)
 ```bash
 md-links node_modules/abab
 ```
-
-Ultra-markdown-md-links lee y analiza archivos en formato `Markdown`.
-  - Desplegando listado de links.
-  - Ruta del archivo donde se encontró el link.
-  - Número de línea donde se encuentra.
-  - Link
-  - Texto que acompaña al link.
   
 ![img](img/md-links.jpg)
 
