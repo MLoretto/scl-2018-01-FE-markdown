@@ -1,6 +1,4 @@
-# README EN CONSTRUCCIÓN
-
-# Markdown Links
+## Markdown Links
 
 Instrucciones de instalación
 
@@ -10,11 +8,66 @@ Ejecute en la consola el siguiente comando
 npm i ultra-markdown-md-links
 ```
 
+
+# Ultra-markdown-md-links
+
+```bash
+md-links (Ruta Archivo)
+```
+  - Ejemplo 
+
+```bash
+md-links node_modules/abab
+```
+
+Ultra-markdown-md-links lee y analiza archivos en formato `Markdown`.
+  - Desplegando listado de links.
+  - Ruta del archivo donde se encontró el link.
+  - Número de línea donde se encuentra.
+  - Link
+  - Texto que acompaña al link.
+  
+![img](img/md-links.jpg)
+
+## --validate 
+
+Realiza una petición HTTP para averiguar si el link funciona o no.
+
+```bash
+md-links (Ruta Archivo) --validate
+```
+  - Ejemplo 
+
+```bash
+md-links node_modules/abab --validate
+```
+Ultra-markdown-md-links lee y analiza archivos en formato `Markdown`.
+  - Desplegando listado de links.
+  - Ruta del archivo donde se encontró el link.
+  - Número de línea donde se encuentra.
+  - Link
+  - STATUS 
+  - Texto que acompaña al link.
+
+![img](img/validate.jpg)
+
+## --stats
+
+Entrega resumen por archivo de links encontrados con cantidad de links validos y no.
+
+```bash
+md-links (Ruta Archivo) --stats
+```
+  - Ejemplo 
+
+```bash
+md-links node_modules/abab --stats
+```
+
+![img](img/stats.jpg)
+
 Versiones de la librería.
 1.0.0
-
-ESTAMOS TRABAJANDO PARA USTED
-![img](img/construccion.jpg)
 
 ## Organización
 
