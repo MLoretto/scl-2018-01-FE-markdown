@@ -1,6 +1,6 @@
 # Markdown Links
 
-![npm]((https://www.npmjs.com/package/ultra-markdown-md-links))
+![npm](https://www.npmjs.com/package/ultra-markdown-md-links)
 
 ## Instalación
 
