@@ -1,13 +1,31 @@
-## Markdown Links
+# Markdown Links
 
-Instrucciones de instalación
+![npm]((https://www.npmjs.com/package/ultra-markdown-md-links))
 
-Ejecute en la consola el siguiente comando
+## Instalación
 
 ```bash
 npm i ultra-markdown-md-links
 ```
 
+```bash
+npm install --save ultra-markdown-md-links
+```
+
+```bash
+npm install -g https://github.com/MLoretto/scl-2018-01-FE-markdown 
+```
+
+## Importar
+
+```bash
+import mdLinks from 'ultra-markdown-md-links'; // ES6
+var mdLinks = require('ultra-markdown-md-links'); // ES5 with npm
+```
+## Uso
+```bash
+md-links <path-to-file> [options]
+```
 
 Ultra-markdown-md-links lee y analiza archivos en formato `Markdown`.
   - Desplegando listado de links.
