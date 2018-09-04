@@ -1,7 +1,5 @@
 # Markdown Links
 
-Acceso a publicación de librería en [npm](https://www.npmjs.com/package/ultra-markdown-md-links)
-
 ## Instalación
 
 ```bash
@@ -85,7 +83,7 @@ md-links node_modules/abab --stats
 ![img](img/stats.jpg)
 
 Versiones de la librería.
-1.0.0
+1.0.3
 
 ## Organización
 

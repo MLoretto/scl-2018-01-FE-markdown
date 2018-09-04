@@ -1,6 +1,6 @@
 {
   "name": "ultra-markdown-md-links",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Search and valid markdown links .md",
   "main": "index.js",
   "directories": {
