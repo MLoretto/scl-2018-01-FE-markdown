@@ -1,6 +1,6 @@
 # Markdown Links
 
-[npm](https://www.npmjs.com/package/ultra-markdown-md-links)
+Acceso a publicación de librería en [npm](https://www.npmjs.com/package/ultra-markdown-md-links)
 
 ## Instalación
 
